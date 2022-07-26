@@ -18,6 +18,7 @@ def get_name(Odnum, mode):
         return 'label_'+ str(num)+".tif"
     def psrgb(num):
         return 'image_'+ str(num)+".png"
+    # if other kinds of image path were needed, add them at the below as former structure. 
 
     fundict={
         "tif":pstif,
@@ -32,7 +33,7 @@ class ImageObj():
         Odnum -> int: the order of image
         """
         self.tif_img=get_name(Odnum, 'tif')
-        self.label_img=get_name(Odnum, 'label')
+        self.label_img=get_name(Odnum, 'label')             # Caution this line for the label image in one channel mode. 
         self.rgb_img=get_name(Odnum, 'rgb')
         self.data_summary = {
             "Image_name":"Img"+str(Odnum),
@@ -71,7 +72,7 @@ class ImageObj():
         label_img = cv2.imread(self.label_img, cv2.IMREAD_GRAYSCALE)
         keys = np.unique(label_img)
         for k in keys:
-            self.data_summary[k] = np.sum(label_img==k)/label_img.size     #count the percentage     
+            self.data_summary[k] = np.sum(label_img==k)/label_img.size     #count the percentage token by different classes in terms of whole image.   
         return True
         
 def ToExcel(AllImg, output_path=''):
