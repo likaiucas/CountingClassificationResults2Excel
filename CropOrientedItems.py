@@ -137,9 +137,11 @@ def main():
     excl_obj=pd.read_excel(excel_form)
     print('Processing clip items....')
     for i, n in enumerate(excl_obj['name']):
-        name, _ = os.path.splitext(n)
-        CropImage(name)
-
+        try:
+            name, _ = os.path.splitext(n)
+            CropImage(name)
+        except:
+            break
     # 记录数据并汇总
     for item in tqdm(FAIR1M_1_5_CLASSES):
         Toexcel(item)
