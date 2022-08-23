@@ -176,13 +176,18 @@ def main():
     l = Null_items_image['name'].shape[0]
     for ll in tqdm(range(l)):
         name, _ = os.path.splitext(Null_items_image.iloc[ll]['name'])
-        p = os.path.join(Ori_im_folder, name+'.png')
-        img = cv2.imread(p)
+        
+        img_p = os.path.join(Ori_im_folder, name+'.png')
+        img = cv2.imread(img_p)
+
+        txt_p = os.path.join(Ori_lb_folder, name+'.txt')
         sp_name = name.split('-')
         unq = str(ll)+sp_name[0]
-        data = []
+        
+        data = open(txt_p).readlines()
         for item in FAIR1M_1_5_CLASSES:
             img, data = forge_img_item(Null_items_image.iloc[ll], item, img, data)
         write_im_txt(img, data, unq,path = Augim_path)
+        
 if __name__=="__main__":
     main()
